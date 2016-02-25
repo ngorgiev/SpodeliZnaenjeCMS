@@ -23,7 +23,14 @@
                     $post_date = $row['post_date'];
                     $post_image = $row['post_image'];
                     $post_content = $row['post_content'];
-
+                    $post_status = $row['post_status'];
+                    
+                    if($post_status !== 'published')
+                    {
+                        echo "<h1 class='text-center'>NO POSTS Sorry</h1>";
+                    }
+                    else   
+                    {
                     ?>
                 
                 <h1 class="page-header">
@@ -46,7 +53,7 @@
                 <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                 <hr>
-                <?php } ?>
+                <?php } }?>
                 
                 
 

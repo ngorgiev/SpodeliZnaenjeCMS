@@ -58,9 +58,9 @@
             
             echo "<td>{$comment_date}</td>";
 
-            echo "<td><a href='posts.php?source=edit_post&p_id=$post_id'>Approve</a></td>";
-            echo "<td><a href='posts.php?delete='>Unapprove</a></td>";
-            echo "<td><a href='posts.php?delete='>Delete</a></td>";
+            echo "<td><a href='comments.php?aprove=$comment_id'>Approve</a></td>";
+            echo "<td><a href='comments.php?unaprove=$comment_id'>Unapprove</a></td>";
+            echo "<td><a href='comments.php?delete=$comment_id'>Delete</a></td>";
             echo "</tr>";
         }
     ?>
@@ -69,11 +69,33 @@
 </table>
 
 <?php
+    if(isset($_GET['aprove']))
+    {
+        $get_comment_id = $_GET['aprove'];
+        $query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = $get_comment_id";
+
+        $aprove_comment_query = mysqli_query($connection, $query);
+
+        header("Location: comments.php");
+    }
+
+    if(isset($_GET['unaprove']))
+    {
+        $get_comment_id = $_GET['unaprove'];
+        $query = "UPDATE comments SET comment_status = 'unaproved' WHERE comment_id = $get_comment_id";
+
+        $unaprove_comment_query = mysqli_query($connection, $query);
+
+        header("Location: comments.php");
+    }
+
     if(isset($_GET['delete']))
     {
-        $get_post_id = $_GET['delete'];
-        $query = "DELETE FROM posts WHERE post_id = {$get_post_id}";
+        $get_comment_id = $_GET['delete'];
+        $query = "DELETE FROM comments WHERE comment_id = {$get_comment_id}";
         
         $delete_query = mysqli_query($connection, $query);
+        
+        header("Location: comments.php");
     }
 ?>
