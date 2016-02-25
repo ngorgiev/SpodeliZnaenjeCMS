@@ -23,10 +23,10 @@
                             echo "<li><a href='#'>{$cat_title}</a></li>";
                         }
                     ?>
-<!--
                     <li>
-                        <a href="#">About</a>
+                        <a href="admin">Admin</a>
                     </li>
+<!--
                     <li>
                         <a href="#">Services</a>
                     </li>
