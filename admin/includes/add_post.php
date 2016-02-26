@@ -83,7 +83,6 @@
     </div>
     
     <div class="form-group">
-        <label for="title">Post Title</label>
         <input type="submit" class="btn btn-primary" name="create_post" value="Publish Post">
     </div>
     
