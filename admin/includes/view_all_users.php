@@ -91,7 +91,7 @@
     if(isset($_GET['change_to_sub']))
     {
         $get_user_id = $_GET['change_to_sub'];
-        $query = "UPDATE users SET user_role = 'subsriber' WHERE user_id = $get_user_id";
+        $query = "UPDATE users SET user_role = 'subscriber' WHERE user_id = $get_user_id";
 
         $change_to_sub_query = mysqli_query($connection, $query);
 
