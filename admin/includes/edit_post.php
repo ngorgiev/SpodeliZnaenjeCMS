@@ -58,6 +58,8 @@
 
         $update_post = mysqli_query($connection, $query);
         confirmQuery($update_post);
+
+        echo "<p class='bg-success'>Post Updated. <a href='../post.php?p_id={$get_post_id}'> View Post</a> or <a href='posts.php'> Edit More Posts</a></p>";
     }
 ?>
 
