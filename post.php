@@ -85,10 +85,10 @@
                                 die('QUERY FAILED' . mysqli_error($connection));
                             }
 
-                            $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-                            $query .= "WHERE post_id = $get_post_id ";
+                            // $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+                            // $query .= "WHERE post_id = $get_post_id ";
 
-                            $update_comment_count = mysqli_query($connection, $query);
+                            // $update_comment_count = mysqli_query($connection, $query);
                         } 
                         else
                         {
