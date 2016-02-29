@@ -12,8 +12,8 @@
                 <?php
                     if(isset($_GET['p_id']))
                     {
-                        $get_post_id = $_GET['p_id']; 
-                        $get_post_author = $_GET['author']; 
+                        $get_post_id = mysqli_real_escape_string($connection,$_GET['p_id']); 
+                        $get_post_author = mysqli_real_escape_string($connection,$_GET['author']); 
                     }
 
                     $query = "SELECT * FROM posts WHERE post_user = '{$get_post_author}' ";
