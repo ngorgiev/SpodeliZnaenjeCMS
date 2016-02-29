@@ -84,7 +84,7 @@
                             {
                                 die('QUERY FAILED' . mysqli_error($connection));
                             }
-
+                            header("Location: " . $_SERVER["REQUEST_URI"]);
                             // $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
                             // $query .= "WHERE post_id = $get_post_id ";
 

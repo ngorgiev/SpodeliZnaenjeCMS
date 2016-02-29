@@ -15,7 +15,7 @@
     </thead>
     <tbody>
         <?php
-            $query = "SELECT * FROM comments WHERE comment_post_id =" . mysqli_rpl_parse_enabled($_GET['id']) ;
+            $query = "SELECT * FROM comments WHERE comment_post_id =" . mysqli_real_escape_string($connection, $_GET['id']) ;
             $select_posts = mysqli_query($connection,$query); 
 
             while($row = mysqli_fetch_assoc($select_posts))
@@ -32,15 +32,6 @@
                 echo "<td>{$comment_id}</td>";
                 echo "<td>{$comment_author}</td>";
                 echo "<td>{$comment_content}</td>";
-
-                //            $query = "SELECT * FROM comments";
-                //            $select_comments = mysqli_query($connection,$query); 
-                //
-                //            while($row = mysqli_fetch_assoc($select_comments))
-                //            {
-                //                $cat_id = $row['cat_id'];
-                //                $cat_title = $row['cat_title'];    
-                //            }
 
                 echo "<td>{$comment_email}</td>";
                 echo "<td>{$comment_status}</td>";
@@ -76,32 +67,38 @@
 </table>
 
 <?php
-    if(isset($_GET['aprove']))
-    {
-        $get_comment_id = $_GET['aprove'];
-        $query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = $get_comment_id";
+    if(isset($_SESSION['user_role']))
+        {
+            if($_SESSION['user_role'] == 'admin')
+            {
+                if(isset($_GET['aprove']))
+                {
+                    $get_comment_id = mysqli_real_escape_string($connection,$_GET['aprove']);
+                    $query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = $get_comment_id";
 
-        $aprove_comment_query = mysqli_query($connection, $query);
+                    $aprove_comment_query = mysqli_query($connection, $query);
 
-        header("Location: comments.php");
-    }
+                    header("Location: comments.php");
+                }
 
-    if(isset($_GET['unaprove']))
-    {
-        $get_comment_id = $_GET['unaprove'];
-        $query = "UPDATE comments SET comment_status = 'unapproved' WHERE comment_id = $get_comment_id";
+                if(isset($_GET['unaprove']))
+                {
+                    $get_comment_id = mysqli_real_escape_string($connection,$_GET['unaprove']);
+                    $query = "UPDATE comments SET comment_status = 'unapproved' WHERE comment_id = $get_comment_id";
 
-        $unaprove_comment_query = mysqli_query($connection, $query);
-        header("Location: comments.php");
-    }
+                    $unaprove_comment_query = mysqli_query($connection, $query);
+                    header("Location: comments.php");
+                }
 
-    if(isset($_GET['delete']))
-    {
-        $get_comment_id = $_GET['delete'];
-        $query = "DELETE FROM comments WHERE comment_id = {$get_comment_id}";
-        
-        $delete_query = mysqli_query($connection, $query);
-        
-        header("Location: comments.php");
-    }
+                if(isset($_GET['delete']))
+                {
+                    $get_comment_id = mysqli_real_escape_string($connection,$_GET['delete']);
+                    $query = "DELETE FROM comments WHERE comment_id = {$get_comment_id}";
+                    
+                    $delete_query = mysqli_query($connection, $query);
+                    
+                    header("Location: comments.php");
+                }
+            }
+        }
 ?>

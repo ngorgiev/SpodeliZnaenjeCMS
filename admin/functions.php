@@ -104,4 +104,5 @@ function deleteCategories()
         header("Location: categories.php");
     }
 }
+
 ?>

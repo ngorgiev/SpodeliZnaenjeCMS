@@ -1,47 +1,54 @@
 <?php
-    if(isset($_POST['checkBoxArray']))
+    if(isset($_SESSION['user_role']))
     {
-        foreach ($_POST['checkBoxArray'] as $postValueId) 
+        if($_SESSION['user_role'] == 'admin')
         {
-            $bulk_options = $_POST['bulk_options'];
+            if(isset($_POST['checkBoxArray']))
+            {
+                foreach ($_POST['checkBoxArray'] as $postValueId) 
+                {
+                    $postValueId = mysqli_real_escape_string($connection, $postValueId);
+                    $bulk_options = $_POST['bulk_options'];
 
-            switch ($bulk_options) {
-                case 'published':
-                    $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE post_id = '{$postValueId}' ";
-                    $update_to_published_status = mysqli_query($connection, $query);
-                    confirmQuery($update_to_published_status);
-                    break;
-                case 'draft':
-                    $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE post_id = '{$postValueId}' ";
-                    $update_to_draft_status = mysqli_query($connection, $query);
-                    confirmQuery($update_to_draft_status);
-                    break;
-               case 'delete':
-                    $query = "DELETE FROM posts WHERE post_id = '{$postValueId}' ";
-                    $update_to_delete_status = mysqli_query($connection, $query);
-                    confirmQuery($update_to_delete_status);
-                    break;
-                case 'clone':
-                    $query = "SELECT * FROM posts WHERE post_id = '{$postValueId}' ";
-                    $select_post_query = mysqli_query($connection, $query);
+                    switch ($bulk_options) {
+                        case 'published':
+                            $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE post_id = '{$postValueId}' ";
+                            $update_to_published_status = mysqli_query($connection, $query);
+                            confirmQuery($update_to_published_status);
+                            break;
+                        case 'draft':
+                            $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE post_id = '{$postValueId}' ";
+                            $update_to_draft_status = mysqli_query($connection, $query);
+                            confirmQuery($update_to_draft_status);
+                            break;
+                       case 'delete':
+                            $query = "DELETE FROM posts WHERE post_id = '{$postValueId}' ";
+                            $update_to_delete_status = mysqli_query($connection, $query);
+                            confirmQuery($update_to_delete_status);
+                            break;
+                        case 'clone':
+                            $query = "SELECT * FROM posts WHERE post_id = '{$postValueId}' ";
+                            $select_post_query = mysqli_query($connection, $query);
 
-                    while($row = mysqli_fetch_array($select_post_query))
-                    {
-                        $post_title = $row['post_title'];
-                        $post_category_id = $row['post_category_id'];
-                        $post_date = $row['post_date'];
-                        $post_author = $row['post_author'];
-                        $post_status = $row['post_status'];
-                        $post_image = $row['post_image'];
-                        $post_tags = $row['post_tags'];
-                        $post_content = $row['post_content'];
+                            while($row = mysqli_fetch_array($select_post_query))
+                            {
+                                $post_title = $row['post_title'];
+                                $post_category_id = $row['post_category_id'];
+                                $post_date = $row['post_date'];
+                                $post_user = $row['post_user'];
+                                $post_status = $row['post_status'];
+                                $post_image = $row['post_image'];
+                                $post_tags = $row['post_tags'];
+                                $post_content = $row['post_content'];
+                            }
+                            $query = "INSERT INTO posts(post_category_id, post_title, post_user, post_date, post_image, post_content, post_tags, post_status) ";
+                            $query .= "VALUES({$post_category_id}, '{$post_title}', '{$post_user}' ,now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_status}')";
+
+                            $copy_query = mysqli_query($connection, $query);
+                            confirmQuery($copy_query);
+                            break;
                     }
-                    $query = "INSERT INTO posts(post_category_id, post_title, post_date, post_image, post_content, post_tags, post_status) ";
-                    $query .= "VALUES({$post_category_id}, '{$post_title}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_status}')";
-
-                    $copy_query = mysqli_query($connection, $query);
-                    confirmQuery($copy_query);
-                    break;
+                }
             }
         }
     }
@@ -155,23 +162,27 @@
 </form>
 
 <?php
-    if(isset($_GET['delete']))
+    if(isset($_SESSION['user_role']))
     {
-        $get_post_id = $_GET['delete'];
-        $query = "DELETE FROM posts WHERE post_id = {$get_post_id}";
-        
-        $delete_query = mysqli_query($connection, $query);
-        
-        header("Location: posts.php");
-    }
+        if($_SESSION['user_role'] == 'admin')
+        {
+            if(isset($_GET['delete']))
+            {
+                $get_post_id = mysqli_real_escape_string($connection, $_GET['delete']);
+                $query = "DELETE FROM posts WHERE post_id = {$get_post_id}";
+                
+                $delete_query = mysqli_query($connection, $query);
+                
+                header("Location: posts.php");
+            }
 
-    if(isset($_GET['reset']))
-    {
-        $get_post_id = $_GET['reset'];
-        $query = "UPDATE posts SET post_views_count = 0 WHERE post_id =" . mysqli_real_escape_string($connection, $_GET['reset']) ." ";
-        
-        $reset_query = mysqli_query($connection, $query);
-        
-        header("Location: posts.php");
+            if(isset($_GET['reset']))
+            {
+                $get_post_id = $_GET['reset'];
+                $query = "UPDATE posts SET post_views_count = 0 WHERE post_id =" . mysqli_real_escape_string($connection, $_GET['reset']) ." ";  
+                $reset_query = mysqli_query($connection, $query);    
+                header("Location: posts.php");
+            }
+        }
     }
 ?>

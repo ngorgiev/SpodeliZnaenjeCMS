@@ -12,7 +12,6 @@
         $post_tags = $_POST['post_tags'];
         $post_content = $_POST['post_content'];
         $post_date = date('d-m-y');
-//        $post_comment_count = 4;
         
         move_uploaded_file($post_image_temp ,"../images/$post_image");
         
@@ -61,10 +60,6 @@
         </select>
     </div>
     
-    <!-- <div class="form-group">
-        <label for="title">Post Author</label>
-        <input type="text" class="form-control" name="author">
-    </div> -->
     <div class="form-group">
         <label for="users"> Users</label>
         <select name="post_user" id="">
@@ -85,11 +80,6 @@
             ?>
         </select>
     </div>
-    
-    <!-- <div class="form-group">
-        <label for="post_status">Post Status</label>
-        <input type="text" class="form-control" name="post_status">
-    </div> -->
 
     <div class="form-group">
         <select name="post_status">
