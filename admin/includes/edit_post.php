@@ -1,7 +1,7 @@
 <?php
     if(isset($_GET['p_id']))
     {
-        $get_post_id = $_GET['p_id'];
+        $get_post_id = mysqli_real_escape_string($connection,$_GET['p_id']);
     }
 
     $query = "SELECT * FROM posts WHERE post_id = $get_post_id";

@@ -49,6 +49,7 @@
                             break;
                     }
                 }
+                header("Location: posts.php");
             }
         }
     }

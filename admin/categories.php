@@ -35,7 +35,7 @@
                         <?php //UPDATE AND INCLUDE QUERY
                         if(isset($_GET['edit']))
                         {
-                            $cat_id = $_GET['edit'];   
+                            $cat_id = mysqli_real_escape_string($connection,$_GET['edit']);   
                             include "includes/update_categories.php";
                         }
                         ?>
@@ -48,6 +48,8 @@
                                 <tr>
                                     <th>Id </th>
                                     <th>Category Title </th>
+                                    <th>Edit </th>
+                                    <th>Delete </th>
                                 </tr>
                             </thead>    
                             <tbody>

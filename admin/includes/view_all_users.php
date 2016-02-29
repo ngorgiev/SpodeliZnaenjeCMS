@@ -34,37 +34,9 @@
                 echo "<td>{$username}</td>";
                 echo "<td>{$user_firstname}</td>";
 
-    //            $query = "SELECT * FROM comments";
-    //            $select_comments = mysqli_query($connection,$query); 
-    //
-    //            while($row = mysqli_fetch_assoc($select_comments))
-    //            {
-    //                $cat_id = $row['cat_id'];
-    //                $cat_title = $row['cat_title'];    
-    //            }
-
                 echo "<td>{$user_lastname}</td>";
                 echo "<td>{$user_email}</td>";
                 echo "<td>{$user_role}</td>";
-
-    //            $query = "SELECT * FROM posts WHERE post_id = $comment_post_id ";
-    //            
-    //            $select_post_id_query = mysqli_query($connection, $query);
-    //            
-    //            $num_rows = mysqli_num_rows($select_post_id_query);
-    //            if($num_rows > 0)
-    //            {
-    //                while($row = mysqli_fetch_assoc($select_post_id_query))
-    //                {
-    //                    $post_id = $row['post_id']; 
-    //                    $post_title = $row['post_title'];
-    //                    echo "<td><a href='../post.php?p_id=$post_id'>$post_title</a></td>";
-    //                }  
-    //            }
-    //            else
-    //            {
-    //                echo "<td>Related Post Removed</td>";
-    //            }
 
                 echo "<td><a href='users.php?change_to_admin={$user_id}'>As Admin</a></td>";
                 echo "<td><a href='users.php?change_to_sub={$user_id}'>As Subscriber</a></td>";
