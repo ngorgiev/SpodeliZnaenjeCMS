@@ -23,9 +23,7 @@
                         echo "<li><a href='#'>{$cat_title}</a></li>";
                     }
                 ?>
-                <li>
-                <a href="admin">Admin</a>
-                </li>
+
                 <?php
                     session_start();
                     if(isset($_SESSION['user_role']))
@@ -34,11 +32,17 @@
                         {
                             if(isset($_GET['p_id']))
                             {
-                                $get_post_id = $_GET['p_id'];
+                                $get_post_id = mysqli_real_escape_string($connection,$_GET['p_id']);
                                 echo "<li><a href='admin/posts.php?source=edit_post&p_id={$get_post_id}'>Edit Post</a></li>";
                             }
+                            echo "<li><a href='admin'>Admin Area</a></li>";
                         }
                     }
+                    else
+                    {
+                        echo "<li><a href='registration.php'>Register</a></li>";
+                    }
+                    echo "<li><a href='contact.php'>Contact Us</a></li>";
                 ?>           
             </ul>
         </div>

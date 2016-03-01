@@ -12,7 +12,7 @@
                 <?php
                     if(isset($_GET['p_id']))
                     {
-                        $get_post_id = $_GET['p_id']; 
+                        $get_post_id = mysqli_real_escape_string($connection,$_GET['p_id']); 
                     
                         $view_query = "UPDATE posts SET post_views_count = post_views_count + 1 WHERE post_id = $get_post_id";
                         $send_query = mysqli_query($connection, $view_query);
@@ -69,10 +69,11 @@
                 <?php
                     if(isset($_POST['create_comment']))
                     {
-                        $get_post_id = $_GET['p_id'];
-                        $comment_author = $_POST['comment_author'];
-                        $comment_email = $_POST['comment_email'];
-                        $comment_content = $_POST['comment_content'];
+                        $get_post_id = mysqli_real_escape_string($connection,$_GET['p_id']);
+                        $comment_author = mysqli_real_escape_string($connection,$_POST['comment_author']);
+                        $comment_email = mysqli_real_escape_string($connection,$_POST['comment_email']);
+                        $comment_content = mysqli_real_escape_string($connection,$_POST['comment_content']);
+                        
                         if(!empty($comment_author ) && !empty($comment_email) && !empty($comment_content))
                         {
                             $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status ,comment_date)";
