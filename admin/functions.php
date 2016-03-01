@@ -51,26 +51,33 @@ function confirmQuery($result)
 function insert_categories()
 {
     global $connection;
-    if(isset($_POST['submit']))
+    if(isset($_SESSION['user_role']))
     {
-        $cat_title = $_POST['cat_title'];
-
-        if($cat_title == "" || empty($cat_title))
+        if($_SESSION['user_role'] == 'admin')
         {
-            echo "This field should not be empty!";
-        }
-        else
-        {
-            $query = "INSERT INTO categories(cat_title)";
-            $query .= "VALUE('{$cat_title}')";
-            $create_category_query = mysqli_query($connection,$query);
-
-            if(!$create_category_query)
+            if(isset($_POST['submit']))
             {
-                die('QUERY FAILED' . mysqli_error($connection));
-            }
+                $cat_title = mysqli_real_escape_string($connection,$_POST['cat_title']);
+
+                if($cat_title == "" || empty($cat_title))
+                {
+                    echo "This field should not be empty!";
+                }
+                else
+                {
+                    $query = "INSERT INTO categories(cat_title)";
+                    $query .= "VALUE('{$cat_title}')";
+                    $create_category_query = mysqli_query($connection,$query);
+
+                    if(!$create_category_query)
+                    {
+                        die('QUERY FAILED' . mysqli_error($connection));
+                    }
+                    header("Location: categories.php");
+                }
+            }   
         }
-    }    
+    } 
 }
 
 function findAllCategories()
@@ -96,12 +103,18 @@ function findAllCategories()
 function deleteCategories()
 {
     global $connection;
-    if(isset($_GET['delete']))
+    if(isset($_SESSION['user_role']))
     {
-        $get_cat_id = $_GET['delete'];
-        $query = "DELETE FROM categories WHERE cat_id = {$get_cat_id} ";
-        $delete_query = mysqli_query($connection,$query);
-        header("Location: categories.php");
+        if($_SESSION['user_role'] == 'admin')
+        {
+            if(isset($_GET['delete']))
+            {
+                $get_cat_id = mysqli_real_escape_string($connection,$_GET['delete']);
+                $query = "DELETE FROM categories WHERE cat_id = {$get_cat_id} ";
+                $delete_query = mysqli_query($connection,$query);
+                header("Location: categories.php");
+            }
+        }
     }
 }
 

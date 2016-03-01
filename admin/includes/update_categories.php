@@ -9,7 +9,7 @@
                 {
                     if(isset($_GET['edit']))
                     {
-                        $cat_id = $_GET['edit'];
+                        $cat_id = mysqli_real_escape_string($connection,$_GET['edit']);
                         $query = "SELECT * FROM categories WHERE cat_id= $cat_id ";
                         $select_categories_to_edit = mysqli_query($connection,$query); 
 
@@ -35,7 +35,7 @@
                     {
                         if(isset($_POST['update_category']))
                         {
-                            $get_cat_title_to_edit = $_POST['cat_title'];
+                            $get_cat_title_to_edit = mysqli_real_escape_string($connection,$_POST['cat_title']);
                             $query = "UPDATE categories SET cat_title = '{$get_cat_title_to_edit}' WHERE cat_id = {$cat_id} ";
                             $update_query = mysqli_query($connection,$query);
 
